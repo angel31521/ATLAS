@@ -3,18 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>ATLAS</title>
+    <link rel="stylesheet" th:href="@{/css/inicio.css}">
+
 </head>
 <body>
     
+<div class="container-inicio">
 
-    <h1>Usted es?</h1>
+    <div class="eleccion">
+        <h2>¿Usted es?</h2>
 
-    
-    <a th:href="@{/inicio/login(tipo='coordinador')}">Coordinador</a>
+                    <p class="texto-info">Seleccione su rol dentro de la institucion</p>
 
-    <a th:href="@{/inicio/login(tipo='docente')}">Docente</a>
+            <div class="opciones">
+                    <a class="boton-rol" th:href="@{/inicio/login(tipo='coordinador')}">Coordinador</a>
 
+                    <a class="boton-rol" th:href="@{/inicio/login(tipo='docente')}">Docente</a>
+            </div>
+    </div>
+
+
+
+</div>
 
 
 

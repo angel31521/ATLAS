@@ -31,29 +31,14 @@ public class InstitucionModel {
 
     
 
-    public Long getId() {
-        return id;
-    }
+    public Long getId() {return id;}
+    public void setId(Long id) {this.id = id;}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public String getNombre() {return nombre;}
+    public void setNombre(String nombre) {this.nombre = nombre;}
 
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public char[] getCodigoInvitacion() {
-        return codigoInvitacion;
-    }
-
-    public void setCodigoInvitacion(char[] codigoInvitacion) {
-        this.codigoInvitacion = codigoInvitacion;
-    }
+    public char[] getCodigoInvitacion() {return codigoInvitacion;}
+    public void setCodigoInvitacion(char[] codigoInvitacion) {this.codigoInvitacion = codigoInvitacion;}
 
 
     
