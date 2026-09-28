@@ -32,6 +32,18 @@ public class InicioController {
 
     }
 
+    @GetMapping("/signup")
+    public String signup(
+
+        @RequestParam (name = "tipo", required = false) String tipo , Model model){
+
+
+        model.addAttribute("tipoUsuario", tipo);
+
+        return "signup";
+
+    }
+
 
 
 }

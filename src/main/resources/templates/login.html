@@ -10,18 +10,13 @@
 </head>
 <body>
 
- <div class="login_container">
+ <div class="container">
         
 
         <h1 th:text="'Login ' + ${tipoUsuario}"></h1>
         
         
         <form id="loginForm" action="" method="POST">
-
-            <div class="form_grupo">
-                <label for="username">Nombre completo</label>
-                <input type="text" id="username" name="username" placeholder="John Doe" required>
-            </div>
             
             <div class="form_grupo">
                 <label for="email">Correo electrónico</label>
@@ -33,40 +28,20 @@
                 <input type="password" id="password" name="password" placeholder="Crea una contraseña" required>
             </div>
 
-            <div class="form_grupo">
-                <label for="confirm_password">Confirmar contraseña</label>
-                <input type="password" id="confirm_password" name="confirm_password" placeholder="Repite tu contraseña" required>
-            </div>
-
-            <div class="checkbox_terms form_grupo">
-                <label for="terms">Acepta los terminos y condiciones.</label>
-                <input type="checkbox" id="terms" name="terms" required>
-            </div>
-
-            <button type="submit" class="boton-submit" th:text="'Crear Cuenta de ' +  ${tipoUsuario}"></button>
+            <button type="submit" class="boton-submit" th:text="'Iniciar sesion como ' +  ${tipoUsuario}"></button>
             
         </form>
 
         <div class="form_footer">
-            <p>¿Ya tienes una cuenta? <a href="#">Inicia sesion</a></p>
+            <p>¿No tienes una cuenta? <a th:href="@{/inicio/signup(tipo=${tipoUsuario})}">Registrate</a></p>
         </div>
     </div>
 
     <script>
         document.getElementById('loginForm').addEventListener('submit', function(event) {
-            const email = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
             const pass = document.getElementById('password').value;
-            const conf_pass = document.getElementById('confirm_password').value;
 
-            if (pass.length < 6) {
-                event.preventDefault();
-                alert('La contraseña debe tener al menos 6 caracteres.');
-            }
-
-            if (pass != conf_pass) {
-                event.preventDefault();
-                alert('La contraseña debe ser igual.')
-            }
         });
     </script>
 
