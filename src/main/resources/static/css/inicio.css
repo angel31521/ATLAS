@@ -1,0 +1,78 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f7f6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+
+    /* fallback for old browsers */
+    background: #D3CCE3; 
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to right, #E9E4F0, #D3CCE3);  
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to right, #E9E4F0, #D3CCE3);
+}   
+
+
+.container-inicio {
+    background-color: #ffffff;
+    padding: 50px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    width: fit-content;
+    max-width: 400px;
+    margin: 0 auto;
+    
+}
+
+.container-inicio h2{
+    
+    margin: 0px;
+    text-align: center;
+    font-size: 50px;
+    color: #333333;
+    
+}
+
+.opciones{
+
+    text-align: center;
+    margin: 0;
+    
+}
+
+
+.texto-info{
+
+text-align: center;
+margin-top: 10px;
+margin-bottom: 30px;
+
+}
+
+.boton-rol {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    text-align: center;
+    margin: 20px;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    text-decoration: none;
+}
+
+.eleccion {
+
+    justify-content: center;
+
+}
+
+.boton-rol:hover {
+    background-color: #0056b3;
+}

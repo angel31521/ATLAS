@@ -6,10 +6,24 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
+
+
+
+
+    /* fallback for old browsers */
+    background: #D3CCE3; 
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to right, #E9E4F0, #D3CCE3);  
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to right, #E9E4F0, #D3CCE3);
+
+
+
+
 }
 
 
-.login_container {
+.container {
     background-color: #ffffff;
     padding: 30px;
     border-radius: 8px;
@@ -18,7 +32,7 @@ body {
     max-width: 400px;
 }
 
-.login_container h1{
+.container h1{
     margin-bottom: 24px;
     text-align: center;
     color: #333333;
