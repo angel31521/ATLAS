@@ -42,7 +42,7 @@ public class InicioController {
 
     }
 
-    
+    //Carga el formulario con el objeto vacio
     @GetMapping("/signup")
     public String signup(@RequestParam (name = "tipo", required = false) String tipo, UsuarioModel usuario, Model model){
 
@@ -55,8 +55,9 @@ public class InicioController {
 
     }
 
-    
 
+
+    //entra el objeto con datos llenos y registra el usuario en la base de datos 
     @PostMapping("/signup")
     public String registrar(@ModelAttribute UsuarioModel usuario, Model model){
 

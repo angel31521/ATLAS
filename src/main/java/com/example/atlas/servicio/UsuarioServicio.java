@@ -21,6 +21,7 @@ public class UsuarioServicio {
 
 
 
+    //Valida el rol, lo convierte en enum y lo asigna a la entidad
     public UsuarioModel crearUsuarioRol(String tipo){
 
        
@@ -41,7 +42,7 @@ public class UsuarioServicio {
     }
 
 
-
+    //Registra el usaurio en la base de datos H2 usando el metodo .save() de CrudRepository 
     public void registrarUsuario(UsuarioModel usuario){
 
         usuarioRepositorio.save(usuario);
