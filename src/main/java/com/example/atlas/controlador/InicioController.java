@@ -1,6 +1,9 @@
 package com.example.atlas.controlador;
+import com.example.atlas.servicio.UsuarioServicio;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import com.example.atlas.modelo.UsuarioModel;
 
 import org.springframework.ui.Model;
 
@@ -9,6 +12,15 @@ import org.springframework.ui.Model;
 @RequestMapping("/inicio")
 public class InicioController {
     
+
+    private final UsuarioServicio usuarioServicio;
+
+
+    InicioController(UsuarioServicio usuarioServicio) {
+        this.usuarioServicio = usuarioServicio;
+    }
+
+
 
     //accede a la vista principal
     @GetMapping 
@@ -21,9 +33,7 @@ public class InicioController {
 
     //espera un parametro llamado tipo
     @GetMapping("/login")
-    public String login(
-
-        @RequestParam (name = "tipo", required = false) String tipo , Model model){
+    public String login(@RequestParam (name = "tipo", required = false) String tipo , Model model){
 
 
         model.addAttribute("tipoUsuario", tipo);
@@ -34,14 +44,31 @@ public class InicioController {
 
     
     @GetMapping("/signup")
-    public String signup(
+    public String signup(@RequestParam (name = "tipo", required = false) String tipo, UsuarioModel usuario, Model model){
 
-        @RequestParam (name = "tipo", required = false) String tipo , Model model){
-
+        
 
         model.addAttribute("tipoUsuario", tipo);
+        model.addAttribute("usuario", usuarioServicio.crearUsuarioRol(tipo));
 
         return "signup";
+
+    }
+
+    
+
+    @PostMapping("/signup")
+    public String registrar(@ModelAttribute UsuarioModel usuario, Model model){
+
+       
+
+        usuarioServicio.registrarUsuario(usuario);
+
+        model.addAttribute("usaurio", usuario);
+
+
+        return "redirect:/inicio/login";
+
 
     }
 
