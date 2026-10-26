@@ -1,11 +1,13 @@
 package com.example.atlas.repositorio;
-
-import org.springframework.data.repository.CrudRepository;
-
+import java.util.Optional;
+import org.springframework.data.jpa.repository.JpaRepository;
 import com.example.atlas.modelo.UsuarioModel;
 
 
-public interface UsuarioRepositorio extends CrudRepository<UsuarioModel, Long> {
+public interface UsuarioRepositorio extends JpaRepository<UsuarioModel, Long> {
 
-    
+    Optional<UsuarioModel> findByCorreo(String correo);
+
+
+
 } 
