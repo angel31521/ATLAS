@@ -75,6 +75,24 @@ public class UsuarioServicioImplm implements UsuarioServicio {
 
 
 
+    @Override
+    public UsuarioModel buscarPorId(Long id) {
+        return usuarioRepositorio.findById(id).orElse(null)  ;
+    }
+
+
+
+    @Override
+    public boolean tieneInstitucion(Long usuarioId) {
+
+            UsuarioModel usuario = buscarPorId(usuarioId);
+
+            return usuario != null && usuario.getInstitucion() != null;
+        
+    }
+
+
+
 
 
 

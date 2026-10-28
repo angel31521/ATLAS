@@ -1,19 +1,15 @@
 package com.example.atlas.servicio;
 
 import org.springframework.stereotype.Service;
-import com.example.atlas.repositorio.InstitucionRepositorio;
+
+import com.example.atlas.modelo.InstitucionModel;
+
 
 
 @Service 
-public class InstitucionServicio {
+public interface InstitucionServicio {
 
-
-private InstitucionRepositorio institucionRepositorio;
-
-public  InstitucionServicio(InstitucionRepositorio institucionRepositorio){
-
-    this.institucionRepositorio = institucionRepositorio;
-}
+       InstitucionModel crearInstitucion(String nombre, Long coordinadorId);
 
 
 }

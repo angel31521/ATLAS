@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +7,27 @@
 </head>
 <body>
 
-    <p>ESTE ES EL PANEL DE COORDINADOR</p>
-    
+ 
+    <div th:if="${mostrarFormulario}">
+    <h2>Registrar institución</h2>
+
+    <form th:action="@{/panel/coordinador}" th:object="${institucion}" method="post">
+
+        <label for="nombre">Nombre de la institución</label>
+
+        <input type="text" id="nombre" th:field="*{nombre}" required>
+
+        <button type="submit">Guardar institución</button>
+    </form>
+</div>
+
+
+
+    <div>
+        <h3>Bienvenid@ coordinador</h3>
+        <p th:text="${institucion.nombre}" ></p>
+    </div>
+
+
 </body>
 </html>

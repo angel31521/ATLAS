@@ -1,5 +1,8 @@
 package com.example.atlas.modelo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.*;
 
 @Entity 
@@ -16,32 +19,78 @@ public class CursoModel {
     private String grupo;
 
 
-    //Instirucion_id (FK)
+    @OneToMany(mappedBy = "curso")
+    private List<EstudianteModel> estudiantes = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "institucion_id", nullable = false)
+    private InstitucionModel institucion;
 
 
     public CursoModel() {}
 
 
-    public CursoModel(Long id, String grado, String grupo) {
+    public CursoModel(Long id, String grado, String grupo, List<EstudianteModel> estudiantes,
+            InstitucionModel institucion) {
         this.id = id;
         this.grado = grado;
+        this.grupo = grupo;
+        this.estudiantes = estudiantes;
+        this.institucion = institucion;
+    }
+
+
+    public Long getId() {
+        return id;
+    }
+
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+
+    public String getGrado() {
+        return grado;
+    }
+
+
+    public void setGrado(String grado) {
+        this.grado = grado;
+    }
+
+
+    public String getGrupo() {
+        return grupo;
+    }
+
+
+    public void setGrupo(String grupo) {
         this.grupo = grupo;
     }
 
 
-    public Long getId() {return id;}
-    public void setId(Long id) {this.id = id;}
+    public List<EstudianteModel> getEstudiantes() {
+        return estudiantes;
+    }
 
 
-    public String getGrado() {return grado;}
-    public void setGrado(String grado) {this.grado = grado;}
+    public void setEstudiantes(List<EstudianteModel> estudiantes) {
+        this.estudiantes = estudiantes;
+    }
 
 
-    public String getGrupo() {return grupo;}
-    public void setGrupo(String grupo) { this.grupo = grupo;}
+    public InstitucionModel getInstitucion() {
+        return institucion;
+    }
+
+
+    public void setInstitucion(InstitucionModel institucion) {
+        this.institucion = institucion;
+    }
 
     
-
+    
 
 
 

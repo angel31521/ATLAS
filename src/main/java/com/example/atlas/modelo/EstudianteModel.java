@@ -19,11 +19,16 @@ public class EstudianteModel {
     private String telefono_padre;
     private String telefono_madre;
 
+    @ManyToOne
+    @JoinColumn(name = "curso_id")
+    private CursoModel curso;
+
+
     public EstudianteModel() {}
 
     
     public EstudianteModel(Long id, String nombre, String direccion, String eps_afiliada, String nombre_padre,
-            String nombre_madre, String telefono_padre, String telefono_madre) {
+            String nombre_madre, String telefono_padre, String telefono_madre, CursoModel curso) {
         this.id = id;
         this.nombre = nombre;
         this.direccion = direccion;
@@ -32,6 +37,7 @@ public class EstudianteModel {
         this.nombre_madre = nombre_madre;
         this.telefono_padre = telefono_padre;
         this.telefono_madre = telefono_madre;
+        this.curso = curso;
     }
 
     public Long getId() {return id;}

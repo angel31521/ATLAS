@@ -14,7 +14,9 @@ public interface UsuarioServicio {
 
      public UsuarioModel validarLogin(String correo, char[]contraseña);
 
+     UsuarioModel buscarPorId(Long id);
 
+     boolean tieneInstitucion(Long usuarioId);
 
 
 }
