@@ -1,5 +1,8 @@
 package com.example.atlas.controlador;
 import com.example.atlas.servicio.UsuarioServicio;
+
+import jakarta.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,7 +51,8 @@ public class InicioController {
         @PostMapping("/login")
         public String login(@RequestParam (name = "tipo", required = false) String tipo ,
                         @RequestParam (name = "email") String correo,
-                        @RequestParam (name = "password") char[] contraseña, Model model){
+                        @RequestParam (name = "password") char[] contraseña, Model model,
+                        HttpSession session){
 
         model.addAttribute("tipoUsuario", tipo);
 
@@ -60,6 +64,9 @@ public class InicioController {
 
             return "login";
         }
+
+        //obtiene el id del usuario que inicio sesion
+        session.setAttribute("usuarioId", usuario.getId());
 
         if(usuario.getRol() == Rol.COORDINADOR ){
             return "redirect:/panel/coordinador";
