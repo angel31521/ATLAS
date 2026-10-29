@@ -29,5 +29,63 @@
     </div>
 
 
+    <section>
+    <h2>Mis cursos</h2>
+
+
+        <p th:if ="errorCurso != null " th:text="${errorCurso}" ></p>
+
+        <p th:if="${mensajeExito != null}"  th:text="${mensajeExito}"> </p>
+
+    <p th:if="${#lists.isEmpty(cursos)}">
+        Todavía no hay cursos registrados.
+    </p>
+
+    <ul th:unless="${#lists.isEmpty(cursos)}">
+        <li th:each="curso : ${cursos}"
+            th:text="${curso.grado + ' - Grupo ' + curso.grupo}">
+        </li>
+    </ul>
+
+
+
+    <button type="button"
+            onclick="document.getElementById('formularioCurso').hidden = false">
+        Agregar curso
+    </button>
+
+    <form id="formularioCurso"
+          th:action="@{/panel/coordinador/cursos}"
+          method="post"
+          hidden>
+
+        <label for="grado">Grado</label>
+        <input type="text"
+               id="grado"
+               name="grado"
+               maxlength="15"
+               required>
+
+        <label for="grupo">Grupo</label>
+        <input type="text"
+               id="grupo"
+               name="grupo"
+               maxlength="15"
+               required>
+
+        <button type="submit">Guardar curso</button>
+
+        <button type="button"
+                onclick="document.getElementById('formularioCurso').hidden = true">
+            Cancelar
+        </button>
+    </form>
+
+
+
+
+</section>
+
+
 </body>
 </html>
