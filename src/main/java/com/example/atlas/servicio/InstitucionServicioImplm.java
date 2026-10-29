@@ -2,7 +2,6 @@ package com.example.atlas.servicio;
 
 import org.springframework.stereotype.Service;
 
-import com.example.atlas.enums.Rol;
 import com.example.atlas.modelo.InstitucionModel;
 import com.example.atlas.modelo.UsuarioModel;
 import com.example.atlas.repositorio.InstitucionRepositorio;
@@ -17,12 +16,15 @@ public class InstitucionServicioImplm implements InstitucionServicio {
 
         
     private final InstitucionRepositorio institucionRepositorio;
-    private final UsuarioRepositorio usuarioRepositorio ;
+    private final UsuarioServicio usuarioServicio;
+    private final UsuarioRepositorio usuarioRepositorio;
 
     public  InstitucionServicioImplm(InstitucionRepositorio institucionRepositorio,
+                                    UsuarioServicio usuarioServicio, 
                                     UsuarioRepositorio usuarioRepositorio ){
 
         this.institucionRepositorio = institucionRepositorio;
+        this.usuarioServicio = usuarioServicio;
         this.usuarioRepositorio = usuarioRepositorio;
     }
 
@@ -31,17 +33,9 @@ public class InstitucionServicioImplm implements InstitucionServicio {
     @Transactional 
     public InstitucionModel crearInstitucion(String nombre, Long coordinadorId) {
 
-                UsuarioModel coordinador = usuarioRepositorio
-                .findById(coordinadorId)
-                .orElseThrow(() ->
-                        new IllegalArgumentException(
-                                "Coordinador no encontrado"));
 
+        UsuarioModel coordinador = usuarioServicio.buscarPorId(coordinadorId) ;
 
-        if (coordinador.getRol() != Rol.COORDINADOR) {
-            throw new IllegalArgumentException(
-                    "El usuario no es coordinador");
-        }
 
         if (coordinador.getInstitucion() != null) {
             throw new IllegalStateException(
@@ -52,9 +46,7 @@ public class InstitucionServicioImplm implements InstitucionServicio {
         InstitucionModel institucion = new InstitucionModel();
         institucion.setNombre(nombre);
 
-        InstitucionModel institucionGuardada =
-                institucionRepositorio.save(institucion);
-
+        InstitucionModel institucionGuardada = institucionRepositorio.save(institucion);
         coordinador.setInstitucion(institucionGuardada);
         usuarioRepositorio.save(coordinador);
 

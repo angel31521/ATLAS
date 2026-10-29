@@ -3,10 +3,12 @@ package com.example.atlas.controlador;
 import org.springframework.stereotype.*;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-
+import com.example.atlas.modelo.CursoModel;
 import com.example.atlas.modelo.InstitucionModel;
 import com.example.atlas.modelo.UsuarioModel;
+import com.example.atlas.servicio.CursoServicio;
 import com.example.atlas.servicio.InstitucionServicio;
 import com.example.atlas.servicio.UsuarioServicio;
 
@@ -19,12 +21,15 @@ public class CoordinadorController {
 
     private final UsuarioServicio usuarioServicio;
     private final InstitucionServicio institucionServicio;
+    private final CursoServicio cursoServicio;
 
     public CoordinadorController(UsuarioServicio usuarioServicio, 
-                                InstitucionServicio institucionServicio){
+                                InstitucionServicio institucionServicio,
+                                CursoServicio cursoServicio){
 
         this.usuarioServicio = usuarioServicio;
         this.institucionServicio = institucionServicio;
+        this.cursoServicio = cursoServicio;
     }
 
 
@@ -37,21 +42,17 @@ public class CoordinadorController {
         Long usuarioId = (Long) session.getAttribute("usuarioId");
 
         boolean tieneInstitucion = usuarioServicio.tieneInstitucion(usuarioId);
-
          UsuarioModel coordinador = usuarioServicio.buscarPorId(usuarioId);
-
          InstitucionModel institucion = coordinador.getInstitucion();
 
-    
-
     model.addAttribute("mostrarFormulario", !tieneInstitucion);
-
     
-    if (!tieneInstitucion) {
-        institucion = new InstitucionModel();
-    }
+    if (!tieneInstitucion) {institucion = new InstitucionModel();}
+        model.addAttribute("institucion", institucion);
 
-    model.addAttribute("institucion", institucion);
+
+        //Listar cursos
+        model.addAttribute("cursos",cursoServicio.listarCursosPorCoordinador(usuarioId));
 
         return "coordinador/panel-coordinador";
 
@@ -61,7 +62,8 @@ public class CoordinadorController {
 
     @PostMapping
     public String formularioCoordinador(Model model, InstitucionModel institucion,
-                                        @RequestParam(name="nombre") String nombre, HttpSession session ){
+                                        @RequestParam(name="nombre") String nombre, 
+                                        HttpSession session ){
 
 
     model.addAttribute("institucion", institucion );
@@ -72,5 +74,33 @@ public class CoordinadorController {
     return "redirect:/panel/coordinador";
     
     }
+
+
+
+    @PostMapping("/cursos")
+    public String guardarCurso( @RequestParam String grado,@RequestParam String grupo,
+                                HttpSession session,  RedirectAttributes redirectAttributes) {
+
+        Long coordinadorId = (Long) session.getAttribute("usuarioId");
+
+        CursoModel curso = new CursoModel();
+        curso.setGrado(grado);
+        curso.setGrupo(grupo);
+
+        cursoServicio.guardarCurso(curso, coordinadorId);
+
+
+            try {
+        cursoServicio.guardarCurso(curso, coordinadorId);
+        redirectAttributes.addFlashAttribute("mensajeExito", "Curso registrado correctamente.");
+    } catch (IllegalStateException e) {
+        redirectAttributes.addFlashAttribute( "errorCurso", e.getMessage());
+    }
+
+
+        return "redirect:/panel/coordinador";
+}
+
+
 
 }

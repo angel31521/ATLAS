@@ -77,7 +77,8 @@ public class UsuarioServicioImplm implements UsuarioServicio {
 
     @Override
     public UsuarioModel buscarPorId(Long id) {
-        return usuarioRepositorio.findById(id).orElse(null)  ;
+        return usuarioRepositorio.findById(id).orElseThrow(() -> 
+                                    new IllegalArgumentException("Usuario no encontrado") )  ;
     }
 
 
