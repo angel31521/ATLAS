@@ -1,23 +1,22 @@
 package com.example.atlas.servicio;
 
 import org.springframework.stereotype.Service;
-import com.example.atlas.repositorio.UsuarioRepositorio;
+import com.example.atlas.modelo.UsuarioModel;
+
 
 
 @Service 
-public class UsuarioServicio {
+public interface UsuarioServicio {
 
- private final UsuarioRepositorio usuarioRepositorio;
+     public UsuarioModel crearUsuarioRol(String tipo);
 
-    public UsuarioServicio(UsuarioRepositorio usuarioRepositorio){
+     public void registrarUsuario(UsuarioModel usuario);
 
-        this.usuarioRepositorio = usuarioRepositorio;
+     public UsuarioModel validarLogin(String correo, char[]contraseña);
 
-    }
+     UsuarioModel buscarPorId(Long id);
 
-
-    
-
+     boolean tieneInstitucion(Long usuarioId);
 
 
 }

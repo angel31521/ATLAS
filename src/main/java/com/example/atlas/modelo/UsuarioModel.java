@@ -20,47 +20,59 @@ public class UsuarioModel {
 
  //char guarda solo un caracter 
  // pero al hacer un array de char guarda cada carcater de la contraseña [c,s,6,*,/]
- @Column( nullable = false)
- private char[] contraseña;
+   @Column( nullable = false)
+   private char[] contraseña;
 
 
- @Enumerated(EnumType.STRING)
- private Rol rol;
+   @Enumerated(EnumType.STRING)
+   private Rol rol;
 
  
- //institucion_id (FK)
+   @ManyToOne
+   @JoinColumn(name = "institucion_id", nullable = true)
+   private InstitucionModel institucion;
 
 
 
- public UsuarioModel() {
- }
 
- public UsuarioModel(Long id, String nombre, String correo, char[] contraseña, Rol rol) {
-    this.id = id;
-    this.nombre = nombre;
-    this.correo = correo;
-    this.contraseña = contraseña;
-    this.rol = rol;
- }
+   public UsuarioModel() {
+   }
 
- public Long getId() {return id;}
- public void setId(Long id) {  this.id = id; }
+   public UsuarioModel(Long id, String nombre, String correo, char[] contraseña, Rol rol, 
+                        InstitucionModel institucion) {
 
+      this.id = id;
+      this.nombre = nombre;
+      this.correo = correo;
+      this.contraseña = contraseña;
+      this.rol = rol;
+      this.institucion = institucion;
+   }
 
- public String getNombre() {return nombre;}
- public void setNombre(String nombre) {this.nombre = nombre;}
-
-
- public String getCorreo() {return correo;}
- public void setCorreo(String correo) {this.correo = correo;}
+   public Long getId() {return id;}
+   public void setId(Long id) {  this.id = id; }
 
 
- public char[] getContraseña() {return contraseña;}
- public void setContraseña(char[] contraseña) {this.contraseña = contraseña;}
+   public String getNombre() {return nombre;}
+   public void setNombre(String nombre) {this.nombre = nombre;}
 
 
- public Rol getRol() {return rol;}
- public void setRol(Rol rol) {this.rol = rol;}
+   public String getCorreo() {return correo;}
+   public void setCorreo(String correo) {this.correo = correo;}
+
+
+   public char[] getContraseña() {return contraseña;}
+   public void setContraseña(char[] contraseña) {this.contraseña = contraseña;}
+
+
+   public Rol getRol() {return rol;}
+   public void setRol(Rol rol) {this.rol = rol;}
+
+
+   public InstitucionModel getInstitucion() {return institucion;}
+   public void setInstitucion(InstitucionModel institucion) {this.institucion = institucion;}
+
+   
 
 
 
