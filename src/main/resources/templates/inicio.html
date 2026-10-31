@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,9 +17,9 @@
                     <p class="texto-info">Seleccione su rol dentro de la institucion</p>
 
             <div class="opciones">
-                    <a class="boton-rol" th:href="@{/inicio/login(tipo='coordinador')}">Coordinador</a>
+                    <a class="boton-rol" th:href="@{/login(tipo='coordinador')}">Coordinador</a>
 
-                    <a class="boton-rol" th:href="@{/inicio/login(tipo='docente')}">Docente</a>
+                    <a class="boton-rol" th:href="@{/login(tipo='docente')}">Docente</a>
             </div>
     </div>
 

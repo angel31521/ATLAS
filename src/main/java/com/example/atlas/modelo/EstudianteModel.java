@@ -64,7 +64,8 @@ public class EstudianteModel {
     public String getTelefono_madre() {return telefono_madre;}
     public void setTelefono_madre(String telefono_madre) {this.telefono_madre = telefono_madre;}
 
-
+    public CursoModel getCurso() {return curso;}
+    public void setCurso(CursoModel curso) {this.curso = curso;}
     
     
 

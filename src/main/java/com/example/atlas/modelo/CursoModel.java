@@ -26,6 +26,9 @@ public class CursoModel {
     @JoinColumn(name = "institucion_id", nullable = false)
     private InstitucionModel institucion;
 
+    @OneToMany(mappedBy = "curso")
+    private List<CursoDocenteModel> asignaciones = new ArrayList<>();
+
 
     public CursoModel() {}
 
@@ -88,16 +91,14 @@ public class CursoModel {
     public void setInstitucion(InstitucionModel institucion) {
         this.institucion = institucion;
     }
-
-    
     
 
+    public List<CursoDocenteModel> getAsignaciones() {
+        return asignaciones;
+    }
 
-
-    
-
-
-
-
+    public void setAsignaciones(List<CursoDocenteModel> asignaciones) {
+        this.asignaciones = asignaciones;
+    }
 
 }

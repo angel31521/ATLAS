@@ -1,13 +1,16 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Panel del coordinador</title>
+
 </head>
+
+
 <body>
 
- 
+
     <div th:if="${mostrarFormulario}">
     <h2>Registrar institución</h2>
 
@@ -29,11 +32,12 @@
     </div>
 
 
-    <section>
+<section th:unless="${mostrarFormulario}">
+    <!-- Cursos -->
     <h2>Mis cursos</h2>
 
 
-        <p th:if ="errorCurso != null " th:text="${errorCurso}" ></p>
+        <p th:if ="${errorCurso != null}" th:text="${errorCurso}" ></p>
 
         <p th:if="${mensajeExito != null}"  th:text="${mensajeExito}"> </p>
 
@@ -43,6 +47,9 @@
 
     <ul th:unless="${#lists.isEmpty(cursos)}">
         <li th:each="curso : ${cursos}"
+            class="curso-item"
+            th:data-curso-id="${curso.id}"
+            th:data-curso-nombre="${curso.grado + ' - Grupo ' + curso.grupo}"
             th:text="${curso.grado + ' - Grupo ' + curso.grupo}">
         </li>
     </ul>
@@ -81,7 +88,312 @@
         </button>
     </form>
 
+    <!-- Docentes -->
+    <!-- Docentes de la institución -->
+    <h2>Docentes</h2>
 
+    <p th:if="${errorDocente != null}" th:text="${errorDocente}"></p>
+
+    <p th:if="${#lists.isEmpty(docentes)}">
+        Todavía no hay docentes agregados.
+    </p>
+
+    <ul th:unless="${#lists.isEmpty(docentes)}">
+        <li th:each="docente : ${docentes}"
+            style="display:flex; justify-content:space-between; max-width:500px;">
+
+            <span>
+                <strong th:text="${docente.nombre}"></strong>
+                (<span th:text="${docente.correo}"></span>)
+            </span>
+
+            <form th:action="@{/panel/coordinador/docentes/{id}/quitar(id=${docente.id})}"
+                method="post"
+                onsubmit="return confirm('¿Quitar a este docente de la institución y de todos sus cursos?');">
+                <button type="submit">Quitar</button>
+            </form>
+        </li>
+    </ul>
+
+    <button type="button"
+            onclick="document.getElementById('formularioDocente').hidden = false">
+        Agregar docente
+    </button>
+
+    <form id="formularioDocente"
+        th:action="@{/panel/coordinador/docentes}"
+        method="post"
+        hidden>
+
+        <label for="docente-correo">Correo del docente</label>
+        <input type="email" id="docente-correo" name="correo" maxlength="150" required>
+
+        <button type="submit">Agregar docente</button>
+        <button type="button"
+                onclick="document.getElementById('formularioDocente').hidden = true">
+            Cancelar
+        </button>
+    </form>
+
+    <!-- Docentes de cada curso (se muestra el del curso seleccionado) -->
+    <div th:each="curso : ${cursos}"
+        class="docentes-curso"
+        th:data-curso-id="${curso.id}"
+        hidden>
+
+        <h3>Docentes de <span th:text="${curso.grado + ' - Grupo ' + curso.grupo}"></span></h3>
+
+        <p th:if="${#lists.isEmpty(curso.asignaciones)}">Este curso no tiene docentes asignados.</p>
+
+        <ul th:unless="${#lists.isEmpty(curso.asignaciones)}">
+            <li th:each="a : ${curso.asignaciones}"
+                style="display:flex; justify-content:space-between; max-width:500px;">
+                <span>
+                    <strong th:text="${a.docente.nombre}"></strong> -
+                    <span th:text="${a.cargo}"></span>
+                </span>
+
+                <form th:action="@{/panel/coordinador/cursos/{c}/docentes/{a}/quitar(c=${curso.id},a=${a.id})}"
+                    method="post">
+                    <button type="submit">Quitar</button>
+                </form>
+            </li>
+        </ul>
+
+        <p th:if="${#lists.isEmpty(docentes)}">
+            Primero agrega docentes a la institución para poder asignarlos.
+        </p>
+
+        <form th:unless="${#lists.isEmpty(docentes)}"
+            th:action="@{/panel/coordinador/cursos/{c}/docentes(c=${curso.id})}"
+            method="post">
+
+            <select name="docenteId" required>
+                <option th:each="d : ${docentes}"
+                        th:value="${d.id}"
+                        th:text="${d.nombre + ' (' + d.correo + ')'}"></option>
+            </select>
+
+            <input type="text" name="cargo" maxlength="100"
+                placeholder="Ej: Docente de matemáticas" required>
+
+            <button type="submit">Asignar al curso</button>
+        </form>
+    </div>
+
+    <!-- Estudiantes -->
+    <h2>Estudiantes <span id="tituloCurso"></span></h2>
+    <button type="button" id="btnTodos">Ver todos</button>
+
+    <p id="sinEstudiantes" hidden>Este curso todavía no tiene estudiantes.</p>
+
+    <p th:if="${errorEstudiante != null}" th:text="${errorEstudiante}"></p>
+
+    <p th:if="${#lists.isEmpty(estudiantes)}">
+        Todavía no hay estudiantes registrados.
+    </p>
+
+    <ul th:unless="${#lists.isEmpty(estudiantes)}">
+        <li th:each="est : ${estudiantes}"
+            class="estudiante-item"
+            style="display:flex; justify-content:space-between; max-width:500px;"
+            th:data-curso-id="${est.curso.id}"
+            th:data-url-editar="@{/panel/coordinador/estudiantes/{id}/editar(id=${est.id})}"
+            th:data-nombre="${est.nombre}"
+            th:data-curso="${est.curso.grado + ' - Grupo ' + est.curso.grupo}"
+            th:data-direccion="${est.direccion}"
+            th:data-eps="${est.eps_afiliada}"
+            th:data-nombre-madre="${est.nombre_madre}"
+            th:data-telefono-madre="${est.telefono_madre}"
+            th:data-nombre-padre="${est.nombre_padre}"
+            th:data-telefono-padre="${est.telefono_padre}">
+
+            <span th:text="${est.nombre}"></span>
+            <span>
+                <button type="button" class="btn-ver">Ver datos</button>
+                <button type="button" class="btn-editar">Editar</button>
+            </span>
+        </li>
+    </ul>
+
+    <button type="button"
+            onclick="document.getElementById('formularioEstudiante').hidden = false">
+        Agregar estudiante
+    </button>
+
+    <form id="formularioEstudiante"
+        th:action="@{/panel/coordinador/estudiantes}"
+        method="post"
+        hidden>
+
+        <label for="cursoId">Curso</label>
+        <select id="cursoId" name="cursoId" required>
+            <option th:each="curso : ${cursos}"
+                    th:value="${curso.id}"
+                    th:text="${curso.grado + ' - Grupo ' + curso.grupo}"></option>
+        </select>
+
+        <label for="est-nombre">Nombre</label>
+        <input type="text" id="est-nombre" name="nombre" maxlength="100" required>
+
+        <label for="direccion">Dirección</label>
+        <input type="text" id="direccion" name="direccion">
+
+        <label for="eps_afiliada">EPS afiliada</label>
+        <input type="text" id="eps_afiliada" name="eps_afiliada">
+
+        <label for="nombre_madre">Nombre de la madre</label>
+        <input type="text" id="nombre_madre" name="nombre_madre">
+
+        <label for="telefono_madre">Teléfono de la madre</label>
+        <input type="text" id="telefono_madre" name="telefono_madre">
+
+        <label for="nombre_padre">Nombre del padre</label>
+        <input type="text" id="nombre_padre" name="nombre_padre">
+
+        <label for="telefono_padre">Teléfono del padre</label>
+        <input type="text" id="telefono_padre" name="telefono_padre">
+
+        <button type="submit">Guardar estudiante</button>
+
+        <button type="button"
+                onclick="document.getElementById('formularioEstudiante').hidden = true">
+            Cancelar
+        </button>
+    </form>
+
+    <!-- Ventana: ver datos -->
+    <dialog id="modalVer">
+        <h3 id="ver-nombre"></h3>
+        <p>Curso: <span id="ver-curso"></span></p>
+        <p>Dirección: <span id="ver-direccion"></span></p>
+        <p>EPS afiliada: <span id="ver-eps"></span></p>
+        <p>Madre: <span id="ver-nombre-madre"></span> - <span id="ver-telefono-madre"></span></p>
+        <p>Padre: <span id="ver-nombre-padre"></span> - <span id="ver-telefono-padre"></span></p>
+
+        <button type="button" onclick="this.closest('dialog').close()">Cerrar</button>
+    </dialog>
+
+    <!-- Ventana: editar -->
+    <dialog id="modalEditar">
+        <h3>Editar estudiante</h3>
+
+        <form id="formEditar" method="post">
+            <label for="edit-nombre">Nombre</label>
+            <input type="text" id="edit-nombre" name="nombre" maxlength="100" required>
+
+            <label for="edit-direccion">Dirección</label>
+            <input type="text" id="edit-direccion" name="direccion">
+
+            <label for="edit-eps">EPS afiliada</label>
+            <input type="text" id="edit-eps" name="eps_afiliada">
+
+            <label for="edit-nombre-madre">Nombre de la madre</label>
+            <input type="text" id="edit-nombre-madre" name="nombre_madre">
+
+            <label for="edit-telefono-madre">Teléfono de la madre</label>
+            <input type="text" id="edit-telefono-madre" name="telefono_madre">
+
+            <label for="edit-nombre-padre">Nombre del padre</label>
+            <input type="text" id="edit-nombre-padre" name="nombre_padre">
+
+            <label for="edit-telefono-padre">Teléfono del padre</label>
+            <input type="text" id="edit-telefono-padre" name="telefono_padre">
+
+            <button type="submit">Guardar cambios</button>
+            <button type="button" onclick="this.closest('dialog').close()">Cancelar</button>
+        </form>
+    </dialog>
+
+    <script>
+        function set(id, valor) {
+            document.getElementById(id).textContent = valor || '';
+        }
+        function setInput(id, valor) {
+            document.getElementById(id).value = valor || '';
+        }
+
+        document.addEventListener('click', function (e) {
+            const boton = e.target.closest('.btn-ver, .btn-editar');
+            if (!boton) return;
+
+            const d = boton.closest('li').dataset;
+
+            if (boton.classList.contains('btn-ver')) {
+                set('ver-nombre', d.nombre);
+                set('ver-curso', d.curso);
+                set('ver-direccion', d.direccion);
+                set('ver-eps', d.eps);
+                set('ver-nombre-madre', d.nombreMadre);
+                set('ver-telefono-madre', d.telefonoMadre);
+                set('ver-nombre-padre', d.nombrePadre);
+                set('ver-telefono-padre', d.telefonoPadre);
+                document.getElementById('modalVer').showModal();
+            } else {
+                document.getElementById('formEditar').action = d.urlEditar;
+                setInput('edit-nombre', d.nombre);
+                setInput('edit-direccion', d.direccion);
+                setInput('edit-eps', d.eps);
+                setInput('edit-nombre-madre', d.nombreMadre);
+                setInput('edit-telefono-madre', d.telefonoMadre);
+                setInput('edit-nombre-padre', d.nombrePadre);
+                setInput('edit-telefono-padre', d.telefonoPadre);
+                document.getElementById('modalEditar').showModal();
+            }
+        });
+
+        let cursoActivo = null;
+
+        function seleccionarCurso(cursoId) {
+            cursoActivo = cursoId;
+            let visibles = 0;
+
+            document.querySelectorAll('.docentes-curso').forEach(function (div) {
+                div.hidden = div.dataset.cursoId !== cursoId;
+            });
+
+            document.querySelectorAll('.estudiante-item').forEach(function (li) {
+                const mostrar = cursoId === null || li.dataset.cursoId === cursoId;
+                li.style.display = mostrar ? 'flex' : 'none';
+                if (mostrar) visibles++;
+            });
+
+            document.querySelectorAll('.curso-item').forEach(function (li) {
+                li.classList.toggle('seleccionado', li.dataset.cursoId === cursoId);
+            });
+
+            const seleccionado = document.querySelector('.curso-item.seleccionado');
+            document.getElementById('tituloCurso').textContent =
+                seleccionado ? '- ' + seleccionado.dataset.cursoNombre : '';
+            document.getElementById('sinEstudiantes').hidden = !(cursoId !== null && visibles === 0);
+
+            if (cursoId !== null) {
+                document.getElementById('cursoId').value = cursoId;
+            }
+
+            try {
+                if (cursoId === null) sessionStorage.removeItem('cursoActivo');
+                else sessionStorage.setItem('cursoActivo', cursoId);
+            } catch (e) {}
+        }
+
+        document.addEventListener('click', function (e) {
+            const curso = e.target.closest('.curso-item');
+            if (curso) {
+                seleccionarCurso(cursoActivo === curso.dataset.cursoId ? null : curso.dataset.cursoId);
+                return;
+            }
+            if (e.target.closest('#btnTodos')) {
+                seleccionarCurso(null);
+            }
+        });
+
+        // Al cargar la página, restaurar la última selección (si ese curso aún existe)
+        let guardado = null;
+        try { guardado = sessionStorage.getItem('cursoActivo'); } catch (e) {}
+        const existe = guardado && document.querySelector('.curso-item[data-curso-id="' + guardado + '"]');
+        seleccionarCurso(existe ? guardado : null);
+    </script>
 
 
 </section>

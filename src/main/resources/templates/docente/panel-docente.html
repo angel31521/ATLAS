@@ -1,14 +1,157 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Panel del docente</title>
+
 </head>
 <body>
 
+    <h2>Panel del docente</h2>
+    <p>Bienvenid@, <strong th:text="${docente.nombre}"></strong></p>
 
-    <p>ESTE ES EL PANEL DE DOCENTE</p>
-    
+    <!-- Sin institución todavía -->
+    <section th:if="${institucion == null}">
+        <p>
+            Todavía no has sido agregado a ninguna institución.
+            Pídele a tu coordinador que te agregue con tu correo:
+            <strong th:text="${docente.correo}"></strong>
+        </p>
+    </section>
+
+    <!-- Con institución -->
+    <section th:unless="${institucion == null}">
+
+        <p>Institución: <strong th:text="${institucion.nombre}"></strong></p>
+
+        <!-- Cursos -->
+        <h2>Mis cursos</h2>
+
+        <p th:if="${#lists.isEmpty(cursos)}">
+            Todavía no tienes cursos asignados.
+        </p>
+
+        <ul th:unless="${#lists.isEmpty(cursos)}">
+            <li th:each="curso : ${cursos}"
+                class="curso-item"
+                th:data-curso-id="${curso.cursoId}"
+                th:data-curso-nombre="${curso.nombreCurso}"
+                th:text="${curso.nombreCurso + ' (' + curso.cargos + ')'}">
+            </li>
+        </ul>
+
+        <!-- Estudiantes -->
+        <h2>Estudiantes <span id="tituloCurso"></span></h2>
+        <button type="button" id="btnTodos">Ver todos</button>
+
+        <p id="sinEstudiantes" hidden>Este curso todavía no tiene estudiantes.</p>
+
+        <p th:if="${#lists.isEmpty(estudiantes)}">
+            No hay estudiantes en tus cursos.
+        </p>
+
+        <ul th:unless="${#lists.isEmpty(estudiantes)}">
+            <li th:each="est : ${estudiantes}"
+                class="estudiante-item"
+                style="display:flex; justify-content:space-between; max-width:500px;"
+                th:data-curso-id="${est.curso.id}"
+                th:data-nombre="${est.nombre}"
+                th:data-curso="${est.curso.grado + ' - Grupo ' + est.curso.grupo}"
+                th:data-direccion="${est.direccion}"
+                th:data-eps="${est.eps_afiliada}"
+                th:data-nombre-madre="${est.nombre_madre}"
+                th:data-telefono-madre="${est.telefono_madre}"
+                th:data-nombre-padre="${est.nombre_padre}"
+                th:data-telefono-padre="${est.telefono_padre}">
+
+                <span th:text="${est.nombre}"></span>
+                <button type="button" class="btn-ver">Ver datos</button>
+            </li>
+        </ul>
+
+    </section>
+
+    <!-- Ventana: ver datos -->
+    <dialog id="modalVer">
+        <h3 id="ver-nombre"></h3>
+        <p>Curso: <span id="ver-curso"></span></p>
+        <p>Dirección: <span id="ver-direccion"></span></p>
+        <p>EPS afiliada: <span id="ver-eps"></span></p>
+        <p>Madre: <span id="ver-nombre-madre"></span> - <span id="ver-telefono-madre"></span></p>
+        <p>Padre: <span id="ver-nombre-padre"></span> - <span id="ver-telefono-padre"></span></p>
+
+        <button type="button" onclick="this.closest('dialog').close()">Cerrar</button>
+    </dialog>
+
+    <script>
+        function set(id, valor) {
+            document.getElementById(id).textContent = valor || '';
+        }
+
+        let cursoActivo = null;   // null = mostrar todos
+
+        function seleccionarCurso(cursoId) {
+            cursoActivo = cursoId;
+            let visibles = 0;
+
+            document.querySelectorAll('.estudiante-item').forEach(function (li) {
+                const mostrar = cursoId === null || li.dataset.cursoId === cursoId;
+                li.style.display = mostrar ? 'flex' : 'none';
+                if (mostrar) visibles++;
+            });
+
+            document.querySelectorAll('.curso-item').forEach(function (li) {
+                li.classList.toggle('seleccionado', li.dataset.cursoId === cursoId);
+            });
+
+            const seleccionado = document.querySelector('.curso-item.seleccionado');
+            document.getElementById('tituloCurso').textContent =
+                seleccionado ? '- ' + seleccionado.dataset.cursoNombre : '';
+            document.getElementById('sinEstudiantes').hidden = !(cursoId !== null && visibles === 0);
+
+            try {
+                if (cursoId === null) sessionStorage.removeItem('cursoActivoDocente');
+                else sessionStorage.setItem('cursoActivoDocente', cursoId);
+            } catch (e) {}
+        }
+
+        document.addEventListener('click', function (e) {
+
+            // Ver datos de un estudiante
+            const ver = e.target.closest('.btn-ver');
+            if (ver) {
+                const d = ver.closest('li').dataset;
+                set('ver-nombre', d.nombre);
+                set('ver-curso', d.curso);
+                set('ver-direccion', d.direccion);
+                set('ver-eps', d.eps);
+                set('ver-nombre-madre', d.nombreMadre);
+                set('ver-telefono-madre', d.telefonoMadre);
+                set('ver-nombre-padre', d.nombrePadre);
+                set('ver-telefono-padre', d.telefonoPadre);
+                document.getElementById('modalVer').showModal();
+                return;
+            }
+
+            // Seleccionar curso (clic de nuevo en el mismo = quitar filtro)
+            const curso = e.target.closest('.curso-item');
+            if (curso) {
+                seleccionarCurso(cursoActivo === curso.dataset.cursoId ? null : curso.dataset.cursoId);
+                return;
+            }
+
+            if (e.target.closest('#btnTodos')) {
+                seleccionarCurso(null);
+            }
+        });
+
+        // Restaurar la última selección
+        let guardado = null;
+        try { guardado = sessionStorage.getItem('cursoActivoDocente'); } catch (e) {}
+        const existe = guardado && document.querySelector('.curso-item[data-curso-id="' + guardado + '"]');
+        seleccionarCurso(existe ? guardado : null);
+    </script>
+
 </body>
 </html>

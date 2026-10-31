@@ -9,6 +9,4 @@ public interface CursoRepositorio extends JpaRepository<CursoModel, Long> {
 
     List<CursoModel> findByInstitucionId(Long institucionId);
 
-
-
 }

@@ -4,22 +4,15 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
     margin: 0;
 
 
+    background: #D3CCE3;
 
+    background: -webkit-linear-gradient(to right, #E9E4F0, #D3CCE3);
 
-    /* fallback for old browsers */
-    background: #D3CCE3; 
-    /* Chrome 10-25, Safari 5.1-6 */
-    background: -webkit-linear-gradient(to right, #E9E4F0, #D3CCE3);  
-    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     background: linear-gradient(to right, #E9E4F0, #D3CCE3);
-
-
-
-
 }
 
 
@@ -32,7 +25,7 @@ body {
     max-width: 400px;
 }
 
-.container h1{
+.container h1 {
     margin-bottom: 24px;
     text-align: center;
     color: #333333;
@@ -50,19 +43,46 @@ body {
     font-size: 14px;
 }
 
-.form_grupo input {
+.form_grupo input,
+.form_grupo select {
     width: 100%;
     padding: 10px;
     border: 1px solid #cccccc;
     border-radius: 4px;
-    box-sizing: border-box; /* Evita que el padding deforme el ancho */
+    box-sizing: border-box;
     font-size: 16px;
+    font-family: inherit;
+    background-color: #ffffff;
+    color: #333333;
 }
 
-.form_grupo input:focus {
+.form_grupo input:focus,
+.form_grupo select:focus {
     border-color: #007bff;
     outline: none;
 }
+
+.form_grupo select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    cursor: pointer;
+    padding-right: 38px;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%23666666' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 12px 8px;
+}
+
+
+.form_grupo select:invalid {
+    color: #999999;
+}
+
+.form_grupo select option {
+    color: #333333;
+}
+
 
 .checkbox_terms {
     display: flex;
@@ -103,23 +123,26 @@ body {
     background-color: #0056b3;
 }
 
-.form-footer {
+
+.form-footer,
+.form_footer {
     margin-top: 15px;
     text-align: center;
     font-size: 14px;
 }
 
-.form-footer a {
+.form-footer a,
+.form_footer a {
     color: #007bff;
     text-decoration: none;
 }
 
-.form-footer a:hover {
+.form-footer a:hover,
+.form_footer a:hover {
     text-decoration: underline;
 }
 
-.error{
-
+.error {
     color: red;
     text-align: center;
 }

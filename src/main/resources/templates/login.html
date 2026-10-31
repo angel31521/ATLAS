@@ -1,25 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login ATLAS</title>
-    <html xmlns:th="http://www.thymeleaf.org">
     <link rel="stylesheet" th:href="@{/css/styles.css}">
-
 </head>
 <body>
 
- <div class="container">
-        
+    <div class="container">
 
-        <h1 th:text="'Login ' + ${tipoUsuario}"></h1>
-        
-        
-        <form id="loginForm" th:action="@{/inicio/login}" method="POST">
+        <h1>Iniciar sesión</h1>
 
-            <input type="hidden" name="tipo" th:value="${tipoUsuario}">
-            
+        <p th:if="${mensajeExito != null}" th:text="${mensajeExito}"></p>
+
+        <form id="loginForm" th:action="@{/login}" method="POST">
+
             <div class="form_grupo">
                 <label for="email">Correo electrónico</label>
                 <input type="email" id="email" name="email" placeholder="ejemplo@correo.com" required>
@@ -29,25 +25,16 @@
                 <label for="password">Contraseña</label>
                 <input type="password" id="password" name="password" placeholder="Ingrese su contraseña" required>
             </div>
-            <p th:if="${error} != null" th:text="${error}" class="error" ></p>
-            <button type="submit" class="boton-submit" th:text="'Iniciar sesion como ' +  ${tipoUsuario}"></button>
-            
+
+            <p th:if="${error != null}" th:text="${error}" class="error"></p>
+
+            <button type="submit" class="boton-submit">Iniciar sesión</button>
         </form>
 
         <div class="form_footer">
-            <p>¿No tienes una cuenta? <a th:href="@{/inicio/signup(tipo=${tipoUsuario})}">Registrate</a></p>
+            <p>¿No tienes una cuenta? <a th:href="@{/signup}">Regístrate</a></p>
         </div>
     </div>
-
-    <script>
-        document.getElementById('loginForm').addEventListener('submit', function(event) {
-            const email = document.getElementById('email').value;
-            const pass = document.getElementById('password').value;
-
-        });
-    </script>
-
-
 
 </body>
 </html>
