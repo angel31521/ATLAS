@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Error 500 | ATLAS</title>
+</head>
+<body>
+    <h1>Error 500</h1>
+    <h2>Error interno del servidor</h2>
+
+    <p th:text="${mensaje}">
+        Ha ocurrido un error inesperado.
+    </p>
+
+    <a th:href="@{/login}">Volver al inicio</a>
+</body>
+</html>
