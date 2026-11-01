@@ -1,0 +1,210 @@
+:root {
+  --fondo: #f4ede3;
+  --tarjeta: #fbf8f2;
+  --borde: #e8dfd1;
+  --texto: #3b2a1e;
+  --texto-suave: #6e5e50;
+  --marron: #6b4a32;
+  --marron-oscuro: #55392a;
+  --radio: 14px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+body {
+  font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+  background: var(--fondo);
+  color: var(--texto);
+  margin: 0 auto;
+  max-width: 1100px;
+  padding: 22px;
+  line-height: 1.5;
+}
+
+p {
+  font-size: 13px;
+  color: var(--texto-suave);
+  margin: 0 0 12px;
+}
+
+strong {
+  color: var(--texto);
+}
+
+/* ---------- Encabezado (h2 + p directos del body) ---------- */
+body > h2,
+body > p {
+  background: var(--tarjeta);
+  border: 1px solid var(--borde);
+  margin: 0;
+}
+
+body > h2 {
+  font-size: 22px;
+  padding: 22px 18px 0;
+  border-bottom: none;
+  border-radius: var(--radio) var(--radio) 0 0;
+}
+
+body > p {
+  padding: 4px 18px 22px;
+  border-top: none;
+  border-radius: 0 0 var(--radio) var(--radio);
+  margin-bottom: 18px;
+  box-shadow: 0 1px 3px rgba(59, 42, 30, 0.06);
+}
+
+/* ---------- Tarjeta principal ---------- */
+section {
+  background: var(--tarjeta);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  padding: 20px 18px;
+  box-shadow: 0 1px 3px rgba(59, 42, 30, 0.06);
+}
+
+section h2 {
+  font-size: 15px;
+  margin: 22px 0 10px;
+  color: var(--texto);
+}
+
+section h2:first-of-type {
+  margin-top: 8px;
+}
+
+#tituloCurso {
+  font-weight: 400;
+  color: var(--texto-suave);
+}
+
+/* ---------- Botones ---------- */
+button {
+  background: var(--marron);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+button:hover {
+  background: var(--marron-oscuro);
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+/* ---------- Cursos ---------- */
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.curso-item {
+  display: inline-block;
+  margin: 0 8px 8px 0;
+  padding: 10px 14px;
+  background: transparent;
+  border: 1px solid var(--borde);
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.curso-item:hover {
+  background: #f3ece0;
+}
+
+.curso-item.seleccionado {
+  background: var(--marron);
+  border-color: var(--marron);
+  color: #fff;
+}
+
+/* ---------- Estudiantes ---------- */
+#btnTodos {
+  margin-bottom: 10px;
+}
+
+.estudiante-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 10px;
+  font-size: 13px;
+  border-bottom: 1px solid var(--borde);
+}
+
+.estudiante-item:first-child {
+  border-top: 1px solid var(--borde);
+}
+
+.btn-ver {
+  background: transparent;
+  color: var(--marron);
+  padding: 4px 8px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.btn-ver:hover {
+  background: transparent;
+  color: var(--marron-oscuro);
+  text-decoration: underline;
+}
+
+/* ---------- Ventana "Ver datos" ---------- */
+dialog {
+  background: var(--tarjeta);
+  color: var(--texto);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  padding: 22px 24px;
+  width: min(92vw, 420px);
+  box-shadow: 0 10px 30px rgba(59, 42, 30, 0.25);
+}
+
+dialog::backdrop {
+  background: rgba(59, 42, 30, 0.45);
+}
+
+dialog h3 {
+  margin: 0 0 14px;
+  font-size: 18px;
+}
+
+dialog p {
+  margin: 0 0 8px;
+  color: var(--texto);
+}
+
+dialog p span {
+  color: var(--texto-suave);
+}
+
+dialog button {
+  margin-top: 12px;
+}
+
+/* ---------- Pantallas pequeñas ---------- */
+@media (max-width: 600px) {
+  body {
+    padding: 14px;
+  }
+}
