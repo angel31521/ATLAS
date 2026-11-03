@@ -215,6 +215,7 @@
                                     class="estudiante-item"
                                     th:data-curso-id="${est.curso.id}"
                                     th:data-url-pdf="@{/panel/coordinador/estudiantes/{id}/pdf(id=${est.id})}"
+                                    th:data-url-editar="@{'/panel/coordinador/estudiantes/' + ${est.id} + '/editar'}"
                                     th:data-nombre="${est.nombre}"
                                     th:data-curso="${est.curso.grado + ' - Grupo ' + est.curso.grupo}"
                                     th:data-direccion="${est.direccion}"
@@ -293,8 +294,8 @@
 
 
                     <button type="button" id="ver-pdf" onclick="window.location.href = this.dataset.url">Descargar PDF</button>
-<button type="button" onclick="this.closest('dialog').close()">Cerrar</button>
                     <button type="button" onclick="this.closest('dialog').close()">Cerrar</button>
+                    
                 </dialog>
 
                     <!-- Ventana: editar -->

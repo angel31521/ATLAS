@@ -44,7 +44,6 @@
         <!-- Estudiantes -->
         <h2>Estudiantes <span id="tituloCurso"></span></h2>
         <button type="button" id="btnTodos">Ver todos</button>
-        <button type="button" onclick="imprimirEstudiantes()">Descargar PDF</button>
 
         <p id="sinEstudiantes" hidden>Este curso todavía no tiene estudiantes.</p>
 
@@ -55,7 +54,6 @@
         <ul th:unless="${#lists.isEmpty(estudiantes)}">
             <li th:each="est : ${estudiantes}"
                 class="estudiante-item"
-                th:data-url-pdf="@{/panel/docente/estudiantes/{id}/pdf(id=${est.id})}"
                 th:data-curso-id="${est.curso.id}"
                 th:data-nombre="${est.nombre}"
                 th:data-curso="${est.curso.grado + ' - Grupo ' + est.curso.grupo}"
@@ -131,7 +129,6 @@
                 set('ver-telefono-madre', d.telefonoMadre);
                 set('ver-nombre-padre', d.nombrePadre);
                 set('ver-telefono-padre', d.telefonoPadre);
-                document.getElementById('ver-pdf').dataset.url = d.urlPdf;
                 document.getElementById('modalVer').showModal();
                 return;
             }
@@ -154,12 +151,6 @@
         const existe = guardado && document.querySelector('.curso-item[data-curso-id="' + guardado + '"]');
         seleccionarCurso(existe ? guardado : null);
     </script>
-
-    <div id="impresion">
-        <h2>Listado de estudiantes</h2>
-        <p th:text=""></p>
-    </div>
-
 
 </body>
 </html>
