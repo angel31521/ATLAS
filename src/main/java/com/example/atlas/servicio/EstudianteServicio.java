@@ -1,20 +1,16 @@
 package com.example.atlas.servicio;
 
-import org.springframework.stereotype.Service;
-import com.example.atlas.repositorio.EstudianteRepositorio;
+import java.util.List;
 
-@Service 
-public class EstudianteServicio {
+import com.example.atlas.modelo.EstudianteModel;
 
-    private final EstudianteRepositorio estudianteRepositorio;
+public interface EstudianteServicio {
 
+    List<EstudianteModel> listarPorCoordinador(Long coordinadorId);
 
-    public EstudianteServicio(EstudianteRepositorio estudianteRepositorio){
+    void guardar(EstudianteModel estudiante, Long cursoId, Long coordinadorId);
 
-        this.estudianteRepositorio = estudianteRepositorio;
+    EstudianteModel buscarDelCoordinador(Long id, Long coordinadorId);
 
-    }
-
-
-
+    void actualizar(Long id, EstudianteModel datos, Long coordinadorId);
 }

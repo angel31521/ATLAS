@@ -72,9 +72,6 @@ public class UsuarioModel {
    public InstitucionModel getInstitucion() {return institucion;}
    public void setInstitucion(InstitucionModel institucion) {this.institucion = institucion;}
 
-   
-
-
 
 
 

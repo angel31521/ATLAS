@@ -1,0 +1,229 @@
+/* Acento propio de cada panel (agrega la clase al <body> o contenedor raíz) */
+:root {
+  /* Base */
+  --color-bg: #F3EDE2;            /* Arena: fondo de la app */
+  --color-surface: #FBF8F2;       /* Crema: tarjetas, tablas, formularios */
+  --color-surface-alt: #EAE1D0;   /* Lino: hover, filas alternas, inputs */
+  --color-border: #D9CDB8;        /* Hueso oscuro: bordes y divisores */
+
+  /* Texto */
+  --color-text: #3B2F26;          /* Café espresso */
+  --color-text-muted: #6E5F50;    /* Café suave */
+  --color-text-inverse: #F6EFE2;  /* Marfil: sobre fondos oscuros */
+
+  /* Marca */
+  --color-primary: #6B4A32;       /* Nogal: botón primario, enlaces */
+  --color-primary-hover: #553A27; /* Nogal oscuro */
+  --color-sidebar: #3E2F25;       /* Chocolate: sidebar y header */
+  --color-accent: #B8895A;        /* Caramelo: ítem activo, iconos, detalles */
+
+  /* Estados */
+  --color-success: #6F7B4F;       /* Oliva */
+  --color-warning: #C08A2B;       /* Ocre */
+  --color-danger: #A8442F;        /* Terracota */
+  --color-info: #4F6F73;          /* Pizarra verdosa */
+
+  /* Estados en versión suave (fondos de badges, alertas) */
+  --color-success-soft: rgba(111, 123, 79, 0.15);
+  --color-warning-soft: rgba(192, 138, 43, 0.15);
+  --color-danger-soft: rgba(168, 68, 47, 0.15);
+  --color-info-soft: rgba(79, 111, 115, 0.15);
+}
+
+.panel-coordinador {
+  --color-role: #6B4A32;          /* Nogal */
+  --color-role-detail: #A8442F;   /* Terracota */
+  --color-role-soft: rgba(107, 74, 50, 0.12);
+}
+
+.panel-docente {
+  --color-role: #5C6B3F;          /* Verde musgo */
+  --color-role-detail: #6F7B4F;   /* Oliva */
+  --color-role-soft: #A9B58D;     /* Salvia: fondos suaves de badges */
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+h2, h3 {
+  margin: 0 0 16px;
+}
+
+button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  background-color: var(--color-role);
+  color: var(--color-text-inverse);
+  font-weight: 600;
+  cursor: pointer;
+  transition: filter 0.2s ease;
+}
+
+button:hover {
+  filter: brightness(0.85);
+}
+
+input, select {
+  padding: 10px 14px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+input:focus, select:focus {
+  outline: none;
+  border-color: var(--color-role);
+  box-shadow: 0 0 0 3px var(--color-role-soft);
+}
+
+label {
+  display: block;
+  margin: 12px 0 6px;
+  font-weight: 600;
+}
+
+dialog {
+  border: 1px solid var(--color-border);
+  border-top: 4px solid var(--color-role);
+  border-radius: 14px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  padding: 24px;
+}
+
+dialog::backdrop {
+  background: rgba(62, 47, 37, 0.55);
+}
+
+ul {
+  padding: 0;
+  margin: 0 0 16px;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+.contenido {
+  padding: 24px 32px;
+  min-width: 0;
+}
+
+.rejilla {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: 320px 1fr;
+  align-items: start;
+}
+
+.columna {
+  display: grid;
+  gap: 24px;
+  min-width: 0;
+}
+
+.tarjeta {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-top: 3px solid var(--color-role);
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: 0 2px 10px rgba(62, 47, 37, 0.06);
+}
+
+.tarjeta h2 {
+  font-size: 1.15rem;
+  margin: 0 0 16px;
+  padding-left: 10px;
+  border-left: 4px solid var(--color-role-detail);
+}
+
+.bienvenida h3 {
+  font-size: 1.7rem;
+  margin: 0 0 8px;
+  color: var(--color-role);
+}
+
+.bienvenida p {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+.tarjeta > button[onclick] {
+  width: 100%;
+  margin: 4px 0 16px;
+}
+
+.tarjeta li {
+  list-style: none;
+  max-width: none !important;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.tarjeta li:last-child {
+  border-bottom: none;
+}
+
+.docentes li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.curso-item {
+  list-style: none;
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.tarjeta .curso-item:not(.seleccionado):hover {
+  background: var(--color-role-soft);
+  border-color: var(--color-role);
+}
+
+.tarjeta .curso-item.seleccionado {
+  background: var(--color-role);
+  border-color: var(--color-role);
+  border-left: 5px solid var(--color-role-detail);
+  color: var(--color-text-inverse);
+}
+
+.estudiante-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  list-style: none;
+  padding: 10px 16px;
+  border-top: 1px solid var(--color-border);
+}
+
+.estudiante-item:nth-child(even) {
+  background: var(--color-surface-alt);
+}
+
+.btn-ver, .btn-editar {
+  background: none;
+  color: var(--color-role);
+  padding: 6px 10px;
+}
+
+.btn-ver:hover, .btn-editar:hover {
+  background: var(--color-role-soft);
+  filter: none;
+}

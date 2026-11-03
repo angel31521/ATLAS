@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error 404 | ATLAS</title>
+    <link rel="stylesheet" th:href="@{/css/errores.css}">
+</head>
+<body class="error-page error-404">
+    <main class="error-card">
+        <span class="error-brand">ATLAS</span>
+        <h1 class="error-code">404</h1>
+        <h2 class="error-title">Página no encontrada</h2>
+        <p class="error-text">La dirección que intentas visitar no existe.</p>
+        <a class="error-btn" th:href="@{/login}">Volver al inicio</a>
+    </main>
+</body>
+</html>

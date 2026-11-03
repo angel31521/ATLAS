@@ -1,125 +1,191 @@
+:root {
+  /* Base */
+  --color-bg: #F3EDE2;            /* Arena: fondo de la app */
+  --color-surface: #FBF8F2;       /* Crema: tarjetas, tablas, formularios */
+  --color-surface-alt: #EAE1D0;   /* Lino: hover, filas alternas, inputs */
+  --color-border: #D9CDB8;        /* Hueso oscuro: bordes y divisores */
+
+  /* Texto */
+  --color-text: #3B2F26;          /* Café espresso */
+  --color-text-muted: #6E5F50;    /* Café suave */
+  --color-text-inverse: #F6EFE2;  /* Marfil: sobre fondos oscuros */
+
+  /* Marca */
+  --color-primary: #6B4A32;       /* Nogal: botón primario, enlaces */
+  --color-primary-hover: #553A27; /* Nogal oscuro */
+  --color-sidebar: #3E2F25;       /* Chocolate: sidebar y header */
+  --color-accent: #B8895A;        /* Caramelo: ítem activo, iconos, detalles */
+
+  /* Estados */
+  --color-success: #6F7B4F;       /* Oliva */
+  --color-warning: #C08A2B;       /* Ocre */
+  --color-danger: #A8442F;        /* Terracota */
+  --color-info: #4F6F73;          /* Pizarra verdosa */
+
+  /* Estados en versión suave (fondos de badges, alertas) */
+  --color-success-soft: rgba(111, 123, 79, 0.15);
+  --color-warning-soft: rgba(192, 138, 43, 0.15);
+  --color-danger-soft: rgba(168, 68, 47, 0.15);
+  --color-info-soft: rgba(79, 111, 115, 0.15);
+}
+
+
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f4f7f6;
+    margin: 0;
+    background: var(--color-bg);
+}
+
+.login-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 100vh;
+}
+
+.login-imagen {
+    background:
+     linear-gradient(to top, rgba(62, 47, 37, 0.85), rgba(62, 47, 37, 0.25)),
+     url('../images/aula.jpg') 62% center/cover no-repeat;
+    display: flex;
+    align-items: flex-end;
+    padding: 48px;
+    color: var(--color-text-inverse);
+}
+
+.login-imagen__texto h2 {
+    margin: 0 0 8px;
+    font-size: 2.2rem;
+    letter-spacing: 0.08em;
+}
+
+.login-imagen__texto p {
+    margin: 0;
+    opacity: 0.9;
+}
+
+.login-panel {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    margin: 0;
-
-
-
-
-    /* fallback for old browsers */
-    background: #D3CCE3; 
-    /* Chrome 10-25, Safari 5.1-6 */
-    background: -webkit-linear-gradient(to right, #E9E4F0, #D3CCE3);  
-    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    background: linear-gradient(to right, #E9E4F0, #D3CCE3);
-
-
-
-
+    padding: 24px;
 }
-
 
 .container {
-    background-color: #ffffff;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 400px;
+    max-width: 460px;
+    padding: 48px 40px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(62, 47, 37, 0.12);
 }
 
-.container h1{
-    margin-bottom: 24px;
+.container h1 {
+    font-size: 2rem;
+    margin: 0 0 32px;
     text-align: center;
-    color: #333333;
 }
-
 
 .form_grupo {
-    margin-bottom: 15px;
+    margin-bottom: 22px;
 }
 
 .form_grupo label {
     display: block;
-    margin-bottom: 5px;
-    color: #666666;
-    font-size: 14px;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--color-text);
 }
 
-.form_grupo input {
+.form_grupo input,
+.form_grupo select {
     width: 100%;
-    padding: 10px;
-    border: 1px solid #cccccc;
-    border-radius: 4px;
-    box-sizing: border-box; /* Evita que el padding deforme el ancho */
-    font-size: 16px;
+    padding: 14px 16px;
+    border: 1px solid var(--color-border);
+    border-radius: 48px;
+    box-sizing: border-box;
+    font-size: 1.05rem;
+    font-family: inherit;
+    background-color: var(--color-surface);
+    color: var(--color-text);
 }
 
-.form_grupo input:focus {
-    border-color: #007bff;
+.form_grupo input:focus,
+.form_grupo select:focus {
+    border-color: var(--color-primary);
     outline: none;
+    box-shadow: 0 0 0 3px rgba(107, 74, 50, 0.18);
 }
 
-.checkbox_terms {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-    gap: 8px;
-}
-
-.checkbox_terms label {
-    font-size: 14px;
-    color: #555555;
+.form_grupo select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
     cursor: pointer;
-    user-select: none;
+    padding-right: 38px;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%23666666' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 12px 8px;
 }
 
 
-.checkbox_terms input[type="checkbox"] {
-    cursor: pointer;
-    width: 16px;
-    height: 16px;
-    margin: 0;
+.form_grupo select:invalid {
+    color: var(--color-text-muted);
 }
 
+.form_grupo select option {
+    color: var(--color-text);
+}
 
 .boton-submit {
     width: 100%;
     padding: 12px;
-    background-color: #007bff;
+    background-color: var(--color-primary);
     color: white;
     border: none;
-    border-radius: 4px;
-    font-size: 16px;
+    border-radius: 48px;
+    font-size: 1.05rem;
     cursor: pointer;
     transition: background 0.3s ease;
 }
 
 .boton-submit:hover {
-    background-color: #0056b3;
+    background-color: var(--color-primary-hover);
 }
 
-.form-footer {
+
+.form-footer,
+.form_footer {
     margin-top: 15px;
     text-align: center;
     font-size: 14px;
 }
 
-.form-footer a {
-    color: #007bff;
+.form-footer a,
+.form_footer a {
+    color: var(--color-primary);
     text-decoration: none;
 }
 
-.form-footer a:hover {
+.form-footer a:hover,
+.form_footer a:hover {
     text-decoration: underline;
 }
 
-.error{
-
-    color: red;
+.error {
+    color: var(--color-danger);
+    background-color: var(--color-danger-soft);
+    border: 1px solid var(--color-danger);
+    border-radius: 6px;
+    padding: 10px 12px;
+    margin: 0 0 12px;
+    font-size: 0.9rem;
     text-align: center;
+}
+
+@media (max-width: 900px) {
+  .login-layout { grid-template-columns: 1fr; }
+  .login-imagen { display: none; }
 }
