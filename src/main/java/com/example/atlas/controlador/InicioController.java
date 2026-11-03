@@ -22,6 +22,7 @@ public class InicioController {
 
     @GetMapping("/")
     public String defaultRedirection() {
+
         return "redirect:/login";
     }
 
