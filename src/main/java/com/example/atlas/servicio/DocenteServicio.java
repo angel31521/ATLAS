@@ -19,4 +19,6 @@ public interface DocenteServicio {
     List<CursoAsignadoVista> cursosDelDocente(Long docenteId);
 
     List<EstudianteModel> estudiantesDelDocente(Long docenteId);
+
+        EstudianteModel buscarDelDocente(Long estudianteId, Long docenteId);
 }

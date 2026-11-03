@@ -8,7 +8,7 @@
 </head>
 
 
-<body>
+<body class="panel-coordinador">
 
     <div class="app">
         <aside class="sidebar"></aside>
@@ -201,6 +201,7 @@
                             <h2>Estudiantes <span id="tituloCurso"></span></h2>
                             <button type="button" id="btnTodos">Ver todos</button>
 
+
                             <p id="sinEstudiantes" hidden>Este curso todavía no tiene estudiantes.</p>
 
                             <p th:if="${errorEstudiante != null}" th:text="${errorEstudiante}"></p>
@@ -212,9 +213,8 @@
                             <ul th:unless="${#lists.isEmpty(estudiantes)}">
                                 <li th:each="est : ${estudiantes}"
                                     class="estudiante-item"
-                                    style="display:flex; justify-content:space-between; max-width:500px;"
                                     th:data-curso-id="${est.curso.id}"
-                                    th:data-url-editar="@{/panel/coordinador/estudiantes/{id}/editar(id=${est.id})}"
+                                    th:data-url-pdf="@{/panel/coordinador/estudiantes/{id}/pdf(id=${est.id})}"
                                     th:data-nombre="${est.nombre}"
                                     th:data-curso="${est.curso.grado + ' - Grupo ' + est.curso.grupo}"
                                     th:data-direccion="${est.direccion}"
@@ -291,6 +291,9 @@
                     <p>Madre: <span id="ver-nombre-madre"></span> - <span id="ver-telefono-madre"></span></p>
                     <p>Padre: <span id="ver-nombre-padre"></span> - <span id="ver-telefono-padre"></span></p>
 
+
+                    <button type="button" id="ver-pdf" onclick="window.location.href = this.dataset.url">Descargar PDF</button>
+<button type="button" onclick="this.closest('dialog').close()">Cerrar</button>
                     <button type="button" onclick="this.closest('dialog').close()">Cerrar</button>
                 </dialog>
 
@@ -349,6 +352,7 @@
                             set('ver-telefono-madre', d.telefonoMadre);
                             set('ver-nombre-padre', d.nombrePadre);
                             set('ver-telefono-padre', d.telefonoPadre);
+                            document.getElementById('ver-pdf').dataset.url = d.urlPdf; 
                             document.getElementById('modalVer').showModal();
                         } else {
                             document.getElementById('formEditar').action = d.urlEditar;

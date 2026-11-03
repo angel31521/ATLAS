@@ -1,0 +1,120 @@
+:root {
+  --color-bg: #F3EDE2;
+  --color-surface: #FBF8F2;
+  --color-surface-alt: #EAE1D0;
+  --color-border: #D9CDB8;
+
+  --color-text: #3B2F26;
+  --color-text-muted: #6E5F50;
+  --color-text-inverse: #F6EFE2;
+
+  --color-primary: #6B4A32;
+  --color-primary-hover: #553A27;
+  --color-sidebar: #3E2F25;
+  --color-accent: #B8895A;
+
+  --color-warning: #C08A2B;
+  --color-danger: #A8442F;
+  --color-warning-soft: rgba(192, 138, 43, 0.15);
+  --color-danger-soft: rgba(168, 68, 47, 0.15);
+}
+
+* { box-sizing: border-box; }
+
+body.error-page {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Variantes: color de estado por tipo de error */
+.error-404 { --color-estado: var(--color-warning); --color-estado-soft: var(--color-warning-soft); }
+.error-500 { --color-estado: var(--color-danger);  --color-estado-soft: var(--color-danger-soft); }
+
+.error-card {
+  width: 100%;
+  max-width: 520px;
+  padding: 48px 40px 40px;
+  text-align: center;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-top: 6px solid var(--color-estado);
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(62, 47, 37, 0.12);
+}
+
+.error-brand {
+  display: inline-block;
+  margin-bottom: 20px;
+  padding: 6px 16px;
+  background: var(--color-sidebar);
+  color: var(--color-text-inverse);
+  border-radius: 48px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+}
+
+.error-code {
+  margin: 0;
+  font-size: 5.5rem;
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--color-estado);
+}
+
+.error-title {
+  margin: 12px 0 16px;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.error-text {
+  margin: 0 0 28px;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--color-text-muted);
+}
+
+/* Mensaje dinámico (500) */
+.error-detail {
+  margin: 0 0 28px;
+  padding: 10px 12px;
+  background: var(--color-estado-soft);
+  border: 1px solid var(--color-estado);
+  border-radius: 6px;
+  font-size: 0.9rem;
+  color: var(--color-estado);
+}
+
+.error-btn {
+  display: inline-block;
+  padding: 12px 32px;
+  background: var(--color-primary);
+  color: #fff;
+  border-radius: 48px;
+  font-size: 1.05rem;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+
+.error-btn:hover { background: var(--color-primary-hover); }
+
+.error-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(107, 74, 50, 0.3);
+}
+
+@media (max-width: 480px) {
+  .error-card { padding: 36px 24px 32px; }
+  .error-code { font-size: 4rem; }
+  .error-title { font-size: 1.25rem; }
+}

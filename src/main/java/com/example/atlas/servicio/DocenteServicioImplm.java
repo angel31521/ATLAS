@@ -126,7 +126,8 @@ public class DocenteServicioImplm implements DocenteServicio {
         for (List<CursoDocenteModel> grupo : porCurso.values()) {
             CursoModel curso = grupo.get(0).getCurso();
             String cargos = grupo.stream()
-                    .map(CursoDocenteModel::getCargo)
+                    .map(a -> a.getCargo())
+                    .filter(cargo -> cargo != null && !cargo.isBlank())
                     .collect(Collectors.joining(", "));
             vistas.add(new CursoAsignadoVista(
                     curso.getId(),
@@ -138,13 +139,24 @@ public class DocenteServicioImplm implements DocenteServicio {
 
     @Override
     public List<EstudianteModel> estudiantesDelDocente(Long docenteId) {
-        List<Long> cursoIds = cursosDelDocente(docenteId).stream()
-                .map(CursoAsignadoVista::getCursoId)
-                .toList();
+        List<Long> cursoIds = new ArrayList<>();
+        for (CursoAsignadoVista curso : cursosDelDocente(docenteId)) {
+            if (curso != null && curso.getCursoId() != null) {
+                cursoIds.add(curso.getCursoId());
+            }
+        }
 
         if (cursoIds.isEmpty()) {
             return List.of();
         }
         return estudianteRepositorio.findByCursoIdIn(cursoIds);
+    }
+
+    @Override
+    public EstudianteModel buscarDelDocente(Long estudianteId, Long docenteId) {
+        return estudiantesDelDocente(docenteId).stream()
+                .filter(e -> e.getId().equals(estudianteId))
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("No tienes acceso a este estudiante."));
     }
 }

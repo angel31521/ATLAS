@@ -14,7 +14,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public String manejarErrorGeneral(Model model) {
+    public String manejarErrorGeneral(Exception ex, Model model) {
 
         model.addAttribute("mensaje",
                 "Ha ocurrido un error inesperado.");
